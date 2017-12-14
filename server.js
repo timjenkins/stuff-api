@@ -24,4 +24,15 @@ mongoose.connection.once('open', () => {
 });
 
 
+// Links Route
+app.get('/links', (req, res) => {
+  Link.find({}, (err, links) => {
+    if (err) return res.status(500).send('An error occurred while retrieving your links');
+
+    res.status(200).send(links);
+    return res;
+  });
+});
+
+
 app.listen(3000);
