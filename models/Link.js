@@ -8,7 +8,10 @@ const LinkSchema = new Schema({
     required: true,
   },
   name: String,
-  dateCreatedno: Date,
+  dateCreated: {
+    type: Date, 
+    required: true,
+  },
   details: {
     price: Number,
   },

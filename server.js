@@ -39,6 +39,7 @@ app.post('/links', (req, res) => {
   const link = new Link();
   link.name = req.body.name;
   link.url = req.body.url;
+  link.dateCreated = new Date();
   link.details = {
     price: req.body.price,
   };
