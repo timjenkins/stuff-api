@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Connect to DB
+mongoose.Promise = global.Promise;
 mongoose.set('debug', true);
 mongoose.connect(dbConfig.url, {
   useMongoClient: true,
@@ -34,5 +35,22 @@ app.get('/links', (req, res) => {
   });
 });
 
+app.post('/links', (req, res) => {
+  const link = new Link();
+  link.name = req.body.name;
+  link.url = req.body.url;
+  link.details = {
+    price: req.body.price,
+  };
+
+  // save the bear and check for errors
+  link.save((err) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json({ message: `Link created ${link}` });
+    }
+  });
+});
 
 app.listen(3000);

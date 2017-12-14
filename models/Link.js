@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
+require('mongoose-type-url');
 
 const { Schema } = mongoose;
 const LinkSchema = new Schema({
-  url: String,
+  url: {
+    type: mongoose.SchemaTypes.Url,
+    required: true,
+  },
   name: String,
-  date: Date,
+  dateCreatedno: Date,
   details: {
     price: Number,
   },
