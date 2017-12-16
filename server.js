@@ -24,6 +24,7 @@ mongoose.connection.once('open', () => {
   console.log('Successfully connected to the database');
 });
 
+// Link Controller functions
 const linkController = {
   all: (req, res) => {
     Link.find({}, (err, links) => {
@@ -63,13 +64,16 @@ const linkController = {
   },
 };
 
-// Links Route
+
+// ROUTES:
+
+// get all links
 app.get('/links', linkController.all);
 
-// Individual Link Route
+// Get one link
 app.get('/links/:id', linkController.one);
 
-// Create New Link Route
+// Create New Link
 app.post('/links', linkController.new);
 
 app.listen(3000);
