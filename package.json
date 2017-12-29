@@ -2,7 +2,7 @@
   "name": "stuff-api-node",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test nyc --reporter=html mocha -t 100000 --exit test/**/*.js"
   },
