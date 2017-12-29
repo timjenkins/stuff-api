@@ -10,7 +10,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connect to DB
 mongoose.Promise = global.Promise;
-mongoose.set('debug', true);
 mongoose.connect(dbConfig.url, {
   useMongoClient: true,
 });
@@ -28,4 +27,4 @@ mongoose.connection.once('open', () => {
 // Connect Router
 app.use('/', routes);
 
-app.listen(3000);
+module.exports = app.listen(3000);

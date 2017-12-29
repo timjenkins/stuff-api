@@ -12,10 +12,10 @@ const linkController = {
   },
 
   one: (req, res) => {
-    Link.findOne({ _id: req.params.id }, (err, links) => {
+    Link.findOne({ _id: req.params.id }, (err, link) => {
       if (err) return res.status(500).send('An error occurred while retrieving your links');
 
-      res.status(200).send(links);
+      res.status(200).send(link);
       return res;
     });
   },
@@ -32,9 +32,8 @@ const linkController = {
     link.save((err) => {
       if (err) {
         res.status(500).send(err);
-        res.send(err);
       } else {
-        res.json({ message: `Link created ${link}` });
+        res.status(200).send(link);
       }
     });
   },

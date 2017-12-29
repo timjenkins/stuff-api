@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test nyc --reporter=html mocha -t 100000 --exit test/**/*.js"
   },
   "author": "tim@timjenkins.me",
   "license": "ISC",
@@ -19,12 +19,16 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
     "eslint": "^4.12.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-mocha": "^4.11.0",
     "eslint-plugin-react": "^7.5.1",
     "mocha": "^4.0.1",
+    "mockgoose": "^7.3.3",
+    "nyc": "^11.4.1",
     "supertest": "^3.0.0"
   }
 }
