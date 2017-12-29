@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const Mongoose = require('mongoose');
-const app = require('../server');
+const app = require('../api/server');
 const dbConfig = require('../db.config');
 
 
