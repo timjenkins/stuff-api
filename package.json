@@ -14,7 +14,9 @@
     "express": "^4.16.2",
     "mongodb": "^3.0.0-rc0",
     "mongoose": "^4.13.7",
+    "mongoose-sanitizer": "^1.0.0",
     "mongoose-type-url": "^1.0.2",
+    "mongoose-validators": "^0.1.0",
     "winston": "^2.4.0"
   },
   "devDependencies": {
