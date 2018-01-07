@@ -7,7 +7,7 @@ const LinkSchema = new Schema({
   url: {
     type: String,
     required: true,
-    validate: validators.isUrl(),
+    validate: validators.isURL(),
   },
   name: String,
   dateCreated: {
@@ -16,8 +16,10 @@ const LinkSchema = new Schema({
     validate: validators.isDate(),
   },
   details: {
-    price: Number,
-    validate: validators.isCurrency({ allow_negatives: false }),
+    price: {
+      type: Number,
+      // validate: validators.isCurrency({ allow_negatives: false }),
+    },
   },
 });
 
