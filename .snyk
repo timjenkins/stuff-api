@@ -1,0 +1,24 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.10.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - mongoose-sanitizer > gulp-mocha > mocha > debug:
+        patched: '2018-01-09T01:56:29.737Z'
+  'npm:minimatch:20160620':
+    - mongoose-sanitizer > gulp-mocha > mocha > glob > minimatch:
+        patched: '2018-01-09T01:56:29.737Z'
+    - mongoose-sanitizer > gulp-jshint > minimatch:
+        patched: '2018-01-09T01:56:29.737Z'
+    - mongoose-sanitizer > gulp > vinyl-fs > glob-stream > minimatch:
+        patched: '2018-01-09T01:56:29.737Z'
+    - mongoose-sanitizer > gulp > vinyl-fs > glob-stream > glob > minimatch:
+        patched: '2018-01-09T01:56:29.737Z'
+    - mongoose-sanitizer > gulp > vinyl-fs > glob-watcher > gaze > globule > minimatch:
+        patched: '2018-01-09T01:56:29.737Z'
+    - mongoose-sanitizer > gulp > vinyl-fs > glob-watcher > gaze > globule > glob > minimatch:
+        patched: '2018-01-09T01:56:29.737Z'
+  'npm:ms:20170412':
+    - mongoose-sanitizer > gulp-mocha > mocha > debug > ms:
+        patched: '2018-01-09T01:56:29.737Z'
