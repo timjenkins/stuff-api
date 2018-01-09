@@ -25,7 +25,7 @@ describe('Links', () => {
 
   it('POST /links should add link', (done) => {
     const linkObject = {
-      name: 'title of link',
+      title: 'title of link',
       url: 'http://url.of.link.com',
     };
     chai.request(app)
@@ -34,14 +34,14 @@ describe('Links', () => {
       .send(linkObject)
       .end((req, res) => {
         chai.expect(res.status).to.equal(200);
-        chai.expect(res.body.name).to.equal('title of link');
+        chai.expect(res.body.title).to.equal('title of link');
         done();
       });
   });
 
   it('GET /links should return added links in array', (done) => {
     const linkObject = {
-      name: 'title of link',
+      title: 'title of link',
       url: 'http://url.of.link.com',
     };
     chai.request(app)
@@ -62,7 +62,7 @@ describe('Links', () => {
 
   it('GET links/:id should return link with matching id', (done) => {
     const linkObject = {
-      name: 'title of link',
+      title: 'title of link',
       url: 'http://url.of.link.com',
     };
     chai.request(app)

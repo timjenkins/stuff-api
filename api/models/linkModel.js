@@ -7,7 +7,7 @@ const LinkSchema = new Schema({
     type: String,
     required: true,
   },
-  name: String,
+  title: String,
   dateCreated: {
     type: Date,
     required: true,
