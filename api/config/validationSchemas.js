@@ -15,7 +15,7 @@ const validationSchemas = {
   ],
 
   link: [
-    check('title').isAlpha(),
+    check('title').isAscii(),
     check('url').isURL(),
     check('price').isCurrency({ allow_negatives: false }),
   ],
