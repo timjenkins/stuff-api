@@ -19,7 +19,7 @@ const loginController = {
             if (hashError) {
               res.status(500).send(hashError);
             } else if (compareRes === true) {
-              res.status(400).send('Hooray! Password Matches!');
+              res.status(200).send('Success!');
             } else {
               res.status(404).send(compareRes);
             }
