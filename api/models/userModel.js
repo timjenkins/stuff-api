@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const validators = require('mongoose-validators');
 const sanitizerPlugin = require('mongoose-sanitizer');
 
 
@@ -9,27 +8,22 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    // validate: validators.isAlphaNumeric(),
   },
   firstName: {
     type: String,
     required: true,
-    validate: validators.isAlpha(),
   },
   lastName: {
     type: String,
     required: true,
-    validate: validators.isAlpha(),
   },
   email: {
     type: String,
     required: true,
-    validate: validators.isEmail(),
   },
   dateCreated: {
     type: Date,
     required: true,
-    validate: validators.isDate(),
   },
   password: {
     type: String,
