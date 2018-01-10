@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const sanitizerPlugin = require('mongoose-sanitizer');
-
 
 const { Schema } = mongoose;
 const UserSchema = new Schema({
@@ -30,8 +28,6 @@ const UserSchema = new Schema({
     required: true,
   },
 });
-
-UserSchema.plugin(sanitizerPlugin);
 
 // Compile model from schema
 const User = mongoose.model('User', UserSchema);

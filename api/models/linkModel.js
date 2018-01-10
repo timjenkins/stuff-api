@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const sanitizerPlugin = require('mongoose-sanitizer');
 
 const { Schema } = mongoose;
 const LinkSchema = new Schema({
@@ -18,9 +17,6 @@ const LinkSchema = new Schema({
     },
   },
 });
-
-// Sanitise Before Saving
-LinkSchema.plugin(sanitizerPlugin);
 
 // Compile model from schema
 const Link = mongoose.model('Link', LinkSchema);
