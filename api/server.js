@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dbConfig = require('../db.config.js'); // eslint-disable-line no-unused-vars
@@ -6,6 +7,8 @@ const routes = require('./config/routes');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(helmet.noCache());
 
 
 // Connect to DB
