@@ -2,5 +2,5 @@ coverage
 .nyc_output
 node_modules
 db.js
-db.config.js
+config.js
 .DS_Store

@@ -2,7 +2,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const Mongoose = require('mongoose');
 const app = require('../api/server');
-const dbConfig = require('../db.config');
+const { dbUrl } = require('../config');
 
 
 chai.use(chaiHttp);
@@ -11,7 +11,7 @@ describe('routes', () => {
   let database = null;
   before((done) => {
     Mongoose.Promise = global.Promise;
-    Mongoose.connect(dbConfig.url, {
+    Mongoose.connect(dbUrl, {
       useMongoClient: true,
     }).then((db) => {
       database = db;

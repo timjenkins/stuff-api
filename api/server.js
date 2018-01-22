@@ -2,7 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const dbConfig = require('../db.config.js'); // eslint-disable-line no-unused-vars
+const { dbUrl } = require('../config');
 const routes = require('./config/routes');
 
 const app = express();
@@ -13,7 +13,7 @@ app.use(helmet.noCache());
 
 // Connect to DB
 mongoose.Promise = global.Promise;
-mongoose.connect(dbConfig.url, {
+mongoose.connect(dbUrl, {
   useMongoClient: true,
 });
 

@@ -1,6 +1,6 @@
 const User = require('../models/userModel.js');
 const bcrypt = require('bcrypt');
-const { globalSalt } = require('../../db.config.js');
+const { globalSalt } = require('../../config');
 const { validationResult } = require('express-validator/check');
 
 // user Controller functions
