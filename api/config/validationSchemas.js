@@ -23,6 +23,10 @@ const validationSchemas = {
   linkId: [
     check('id').isAlphanumeric(),
   ],
+
+  userId: [
+    check('id').isAlphanumeric(),
+  ],
 };
 
 

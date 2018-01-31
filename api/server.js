@@ -2,6 +2,8 @@ const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
+
 const { dbUrl } = require('../config');
 const routes = require('./config/routes');
 
@@ -9,7 +11,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(helmet.noCache());
-
+app.use(morgan('combined'));
 
 // Connect to DB
 mongoose.Promise = global.Promise;
@@ -17,8 +19,8 @@ mongoose.connect(dbUrl, {
   useMongoClient: true,
 });
 
-mongoose.connection.on('error', (error) => {
-  console.log(`Could not connect to the database. Exiting now... \n ${error}`);
+mongoose.connection.on('error', () => {
+  console.log('Could not connect to the database. Exiting now...');
   process.exit();
 });
 
