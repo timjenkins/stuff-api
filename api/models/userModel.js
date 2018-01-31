@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const { Schema } = mongoose;
 const UserSchema = new Schema({
@@ -18,6 +19,7 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   dateCreated: {
     type: Date,
@@ -28,6 +30,8 @@ const UserSchema = new Schema({
     required: true,
   },
 });
+
+UserSchema.plugin(uniqueValidator);
 
 // Compile model from schema
 const User = mongoose.model('User', UserSchema);

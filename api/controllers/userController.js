@@ -34,12 +34,43 @@ const userController = {
               lastName: user.lastName,
               email: user.email,
               dateCreated: user.dateCreated,
+              id: user._id,
             });
           }
         });
       });
     }
   },
+
+  one: (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.mapped() });
+    } else {
+      User.findOne({ _id: req.params.id }, (err, user) => {
+        if (err) {
+          res.status(500).send('An error occurred while retrieving your links');
+        } else if (req.user.id.toString() !== user._id.toString()) {
+          res.status(500).send('You do not have proper permissions to view this user.');
+        } else {
+          const result = user;
+          result.password = null;
+          res.status(200).send(result);
+        }
+      });
+    }
+    return res;
+  },
+
+  // DEBUG ONLY
+  // all: (req, res) => {
+  //   User.find({}, (err, users) => {
+  //     if (err) return res.status(500).send('An error occurred while retrieving your links');
+
+  //     res.status(200).send(users);
+  //     return res;
+  //   });
+  // },
 };
 
 module.exports = userController;
