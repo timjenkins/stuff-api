@@ -2,6 +2,7 @@ coverage
 .nyc_output
 node_modules
 db.js
-config.js
 .DS_Store
 newrelic.js
+newrelic_agent.log
+.env
