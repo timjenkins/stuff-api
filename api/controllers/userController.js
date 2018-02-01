@@ -28,7 +28,7 @@ const userController = {
           if (err) {
             res.status(500).send(saveErr);
           } else {
-            res.status(200).send({
+            res.status(201).send({
               username: user.username,
               firstName: user.firstName,
               lastName: user.lastName,
@@ -51,7 +51,7 @@ const userController = {
         if (err) {
           res.status(500).send('An error occurred while retrieving your links');
         } else if (req.user.id.toString() !== user._id.toString()) {
-          res.status(500).send('You do not have proper permissions to view this user.');
+          res.status(403).send('You do not have proper permissions to view this user.');
         } else {
           const result = user;
           result.password = null;

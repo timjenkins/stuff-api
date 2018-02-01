@@ -37,7 +37,7 @@ describe('routes', () => {
         .set('content-type', 'application/x-www-form-urlencoded')
         .send(userObject)
         .end((req, res) => {
-          chai.expect(res.status).to.equal(200);
+          chai.expect(res.status).to.equal(201);
           chai.expect(res.body.username).to.equal('myUsername');
           done();
         });
@@ -117,7 +117,7 @@ describe('routes', () => {
         .set('Authorization', JWT)
         .send(linkObject)
         .end((req, res) => {
-          chai.expect(res.status).to.equal(200);
+          chai.expect(res.status).to.equal(201);
           chai.expect(res.body.title).to.equal('title of link');
           done();
         });
