@@ -7,6 +7,9 @@ const jwt = require('express-jwt');
 const { dbUrl, jwtSecret, publicPaths } = require('../config');
 const routes = require('./config/routes');
 
+// Analytics
+require('newrelic');
+
 // Init app
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,7 +23,7 @@ app.use(morgan('combined'));
 
 // Authenticate API Routes using JWT
 app.use(jwt({ secret: jwtSecret }).unless({ path: publicPaths }));
-app.use((err, req, res) => {
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   if (err.name === 'UnauthorizedError') {
     res.status(401).send('invalid token');
   }
