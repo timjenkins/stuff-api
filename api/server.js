@@ -5,15 +5,20 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const jwt = require('express-jwt');
 const { dbUrl, jwtSecret, publicPaths } = require('../config');
-
 const routes = require('./config/routes');
 
-
+// Init app
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Security package
 app.use(helmet());
 app.use(helmet.noCache());
+
+// HTTP logging
 app.use(morgan('combined'));
+
+// Authenticate API Routes using JWT
 app.use(jwt({ secret: jwtSecret }).unless({ path: publicPaths }));
 app.use((err, req, res) => {
   if (err.name === 'UnauthorizedError') {
