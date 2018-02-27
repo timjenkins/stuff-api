@@ -6,6 +6,10 @@ const LinkSchema = new Schema({
     type: String,
     required: true,
   },
+  user: {
+    type: String,
+    required: true,
+  },
   title: String,
   dateCreated: {
     type: Date,
