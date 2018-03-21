@@ -3,6 +3,5 @@ coverage
 node_modules
 db.js
 .DS_Store
-newrelic.js
 newrelic_agent.log
 .env
