@@ -21,8 +21,6 @@ app.use(helmet.noCache());
 // HTTP logging
 app.use(morgan('combined'));
 
-// Authenticate API Routes using JWT
-app.use(jwt({ secret: jwtSecret }).unless({ path: publicPaths }));
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   if (err.name === 'UnauthorizedError') {
     res.status(401).send('invalid token');
@@ -46,6 +44,6 @@ mongoose.connection.once('open', () => {
 
 
 // Connect Router
-app.use('/', routes);
+app.use('/', jwt({ secret: jwtSecret }), routes);
 
 module.exports = app.listen(3000);
