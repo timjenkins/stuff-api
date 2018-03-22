@@ -10,10 +10,6 @@ const routes = require('./config/routes');
 // Analytics
 require('newrelic');
 
-
-console.log(process.env.JWT_SECRET);
-
-
 // Init app
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
