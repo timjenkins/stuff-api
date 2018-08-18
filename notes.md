@@ -1,0 +1,2 @@
+- uses require because imports aren't ready yet, and don't work well with express (when transpiling with babel)
+- uses uuid's instead of ObjectId's to avoid passing data in the id (ObjectId's include readable data about the server)

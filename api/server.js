@@ -47,5 +47,4 @@ mongoose.connection.once('open', () => {
 
 // Connect Router
 app.use('/', routes);
-
-module.exports = app.listen(8081);
+module.exports = app.listen(8080, '0.0.0.0');

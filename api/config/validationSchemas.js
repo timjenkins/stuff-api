@@ -2,9 +2,6 @@ const { check } = require('express-validator/check');
 
 const validationSchemas = {
   user: [
-    check('username').isAlphanumeric(),
-    check('firstName').isAlpha(),
-    check('lastName').isAlpha(),
     check('email').isEmail(),
     check('password').matches(/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/),
   ],
@@ -14,18 +11,35 @@ const validationSchemas = {
     check('password').isAscii(),
   ],
 
-  link: [
-    check('title').optional().isAscii(),
-    check('url').isURL(),
-    check('price').optional().isCurrency({ allow_negatives: false }),
+  list: [
+    check('name').exists(),
   ],
 
-  linkId: [
+  product: [
+    check('name').not().isEmpty(),
+    check('url').isURL(),
+    check('price').optional().isCurrency({ allow_negatives: false }),
+    check('currency').optional().isAlpha(),
+  ],
+
+  productUpdate: [
+    check('id').isUUID(),
+    check('listId').isUUID(),
+    check('url').optional().isURL(),
+    check('price').optional().isCurrency({ allow_negatives: false }),
+    check('currency').optional().isAlpha(),
+  ],
+
+  productId: [
     check('id').isAlphanumeric(),
   ],
 
   userId: [
-    check('id').isAlphanumeric(),
+    check('id').isUUID(),
+  ],
+
+  listId: [
+    check('id').isUUID(),
   ],
 };
 

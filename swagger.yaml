@@ -1,0 +1,416 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://virtserver.swaggerhub.com/stuff6/Stuff/1.0.0'
+info:
+  description: API for Stuff (wishlist app)
+  version: 1.0.2
+  title: Stuff API
+  contact:
+    email: tim@timjenkins.me
+security:
+  - bearerAuth: []
+paths:
+  /signup:
+    post:
+      summary: signup for new users
+      requestBody:
+        $ref: '#/components/requestBodies/postSignup'
+      responses:
+        '201':
+          description: 'user created, returns user object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: duplicate email
+  /login:
+    post:
+      summary: starting a new session
+      requestBody:
+        $ref: '#/components/requestBodies/postSignup'
+      responses:
+        '200':
+          description: Login Successful (returns jwt)
+          content:
+            application/json:
+              schema:
+                type: string
+        '401':
+          description: Invalid email or password
+  /users:
+    get:
+      summary: returns single user as defined by jwt
+      description: |
+        returns the user information for the user that is authenticated via the jwt
+      responses:
+        '200':
+          description: a single user object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: invalid token
+        '500':
+          description: An error occurred while retrieving your user information
+  /lists:
+    get:
+      summary: returns array of lists for the authenticated user
+      responses:
+        '200':
+          description: an array of lists
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/List'
+        '401':
+          description: invalid token
+    post:
+      summary: create new list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+              required:
+                - name
+      responses:
+        '201':
+          description: 'new list created, returns new list object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        '400':
+          description: 'invalid input, object invalid'
+        '401':
+          description: invalid token
+  '/lists/:id':
+    parameters:
+      - in: path
+        name: _id
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        description: The list's ID
+    get:
+      summary: returns a specific list by id
+      responses:
+        '200':
+          description: a single list with it's items
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWithItems'
+        '401':
+          description: auth error
+        '404':
+          description: the list does not exist
+    patch:
+      summary: updates a specific list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: 'list updated, returns updated list'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        '400':
+          description: 'invalid input, object invalid'
+        '401':
+          description: invalid token
+        '404':
+          description: the list does not exist
+    delete:
+      summary: deletes a specific list
+      responses:
+        '202':
+          description: list was deleted
+        '401':
+          description: auth error
+        '404':
+          description: the list does not exist
+  /items:
+    post:
+      summary: 'create new list item, add to list array'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Product Name
+                url:
+                  type: string
+                  example: 'http://www.store.com/products/342'
+                notes:
+                  type: string
+                  example: 'I think i want this one, but only after ..etc'
+                price:
+                  type: number
+                  example: 21.95
+                currency:
+                  type: string
+                  example: USD
+                listId:
+                  type: string
+                  format: uuid
+                  example: d290f1ee-6c54-4b01-90e6-d701748f0851
+              required:
+                - name
+                - url
+                - listId
+      responses:
+        '201':
+          description: 'new listIitem created, returns new listIitem object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListItem'
+        '400':
+          description: 'invalid input, object invalid'
+        '401':
+          description: invalid token
+  '/items/:id':
+    parameters:
+      - in: path
+        name: _id
+        description: The listItem's ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+    get:
+      summary: returns a specific listItem by id
+      responses:
+        '200':
+          description: a single listItem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListItem'
+        '401':
+          description: auth error
+        '404':
+          description: the listItem does not exist
+    patch:
+      summary: updates a specific listItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                url:
+                  type: string
+                notes:
+                  type: string
+                price:
+                  type: number
+                  example: 21.95
+                currency:
+                  type: string
+            example:
+              name: Product Name
+              url: 'http://www.store.com/products/342'
+              notes: 'I think i want this one, but only after ..etc'
+              price: 21.95
+              currency: USD
+      responses:
+        '201':
+          description: 'updates specific listItem, returns updated listItem'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListItem'
+        '400':
+          description: 'invalid input, object invalid'
+        '401':
+          description: invalid token
+        '404':
+          description: the listItem does not exist
+    delete:
+      summary: deletes a specific listItem
+      responses:
+        '202':
+          description: listItem was deleted
+        '401':
+          description: auth error
+        '404':
+          description: the listItem does not exist
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@email.com
+        lists:
+          type: array
+          items:
+            type: string
+            format: uuid
+            example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        _id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        createdAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+    List:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Wedding Gift Ideas
+        description:
+          type: string
+          example: A bunch of items to possibly buy for Jim and Pams wedding
+        listItems:
+          type: array
+          items:
+            type: string
+            format: uuid
+            example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        userId:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        _id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        createdAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+    ListWithItems:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Wedding Gift Ideas
+        description:
+          type: string
+          example: A bunch of items to possibly buy for Jim and Pams wedding
+        listItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListItem'
+        userId:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        _id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        createdAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+    ListItem:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Product Name
+        url:
+          type: string
+          example: 'http://www.store.com/products/342'
+        notes:
+          type: string
+          example: 'I think i want this one, but only after ..etc'
+        price:
+          type: number
+          example: 21.95
+        currency:
+          type: string
+          example: US
+        userId:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        listId:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        _id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        createdAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+  requestBodies:
+    postSignup:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+            required:
+              - email
+              - password
