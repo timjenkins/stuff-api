@@ -1,2 +1,9 @@
 - uses require because imports aren't ready yet, and don't work well with express (when transpiling with babel)
 - uses uuid's instead of ObjectId's to avoid passing data in the id (ObjectId's include readable data about the server)
+- Users, Lists, and Products are separate entites and are linked to each other using references (stored as unique id's). For example: 
+  - User
+    - email
+    - password
+    - lists
+      - an array of unique list ID's that reference items of the "Lists" collection
+- These relationships are managed using mongo's `ref` and `populate()`
