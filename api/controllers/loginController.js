@@ -1,7 +1,7 @@
 const User = require('../models/userModel.js');
 const bcrypt = require('bcrypt');
 const { globalSalt, jwtSecret } = require('../../config');
-const { validationResult } = require('express-validator/check');
+const validateInput = require('../helpers/validateInput');
 const jwt = require('jsonwebtoken');
 
 // Login Controller functions
@@ -10,35 +10,47 @@ const loginController = {
     const token = jwt.sign({
       id: user._id,
     }, jwtSecret, {
-      expiresIn: 300000,
+      expiresIn: 900,
     });
 
     return token;
   },
 
   login: (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.mapped() });
-    } else {
+    validateInput(req, res, () => {
+      // Find user by email
       User.findOne({ email: req.body.email }, (err, foundUser) => {
+        // Handle case where no user is found
         if (err) {
-          res.status(500).send('User not found');
-        } else {
-          const enteredSaltedPassword = req.body.password + globalSalt;
-          bcrypt.compare(enteredSaltedPassword, foundUser.password, (hashError, compareRes) => {
-            if (hashError) {
-              res.status(500).send(hashError);
-            } else if (compareRes === true) {
-              res.status(200).send(loginController.generateToken(foundUser));
-            } else {
-              res.status(404).send(compareRes);
-            }
-          });
+          return res.status(404).send('Invalid Credentials');
         }
+        // Salt the password
+        const enteredSaltedPassword = req.body.password + globalSalt;
+
+        // Password check
+        return bcrypt.compare(
+          enteredSaltedPassword,
+          foundUser.password,
+          (hashError, compareRes) => {
+            // Handle server error
+            if (hashError) {
+              return res.status(500).send(hashError);
+
+            // Handle wrong password
+            } else if (compareRes !== true) {
+              return res.status(404).send('Invalid Credentials');
+            }
+
+            // Handle success
+            return res.status(200).send({
+              token: loginController.generateToken(foundUser),
+            });
+          },
+        );
       });
-    }
-    return res;
+
+      return res;
+    });
   },
 };
 

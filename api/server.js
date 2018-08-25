@@ -1,6 +1,6 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const helmet = require('helmet');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const jwt = require('express-jwt');
@@ -47,5 +47,4 @@ mongoose.connection.once('open', () => {
 
 // Connect Router
 app.use('/', routes);
-
-module.exports = app.listen(3000);
+module.exports = app.listen(8080, '0.0.0.0');

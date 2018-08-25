@@ -1,35 +1,33 @@
 const mongoose = require('mongoose');
+const uuid = require('uuid/v4');
 const uniqueValidator = require('mongoose-unique-validator');
 
+require('mongoose-uuid2')(mongoose);
+
+const { UUID } = mongoose.SchemaTypes;
+
 const { Schema } = mongoose;
-const UserSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
+const UserSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    lists: [{ type: UUID }],
+    _id: {
+      type: UUID,
+      default: uuid,
+    },
   },
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  dateCreated: {
-    type: Date,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-});
+  { timestamps: true, id: false },
+);
+UserSchema.set('toObject', { getters: true });
+UserSchema.set('toJSON', { getters: true });
 
 UserSchema.plugin(uniqueValidator);
 

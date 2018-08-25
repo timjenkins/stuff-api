@@ -1,7 +1,7 @@
 require('dotenv').load();
 
 let envUrl = '';
-const prodEnvUrl = `mongodb://timjenkins:${process.env.PROD_MONGO_PWD}@stuffdb-shard-00-00-qg7z1.mongodb.net:27017,stuffdb-shard-00-01-qg7z1.mongodb.net:27017,stuffdb-shard-00-02-qg7z1.mongodb.net:27017/test?ssl=true&replicaSet=StuffDB-shard-0&authSource=admin`;
+const prodEnvUrl = `mongodb://timjenkins:${process.env.PROD_MONGO_PWD}@stuffdb-shard-00-00-qg7z1.mongodb.net:27017,stuffdb-shard-00-01-qg7z1.mongodb.net:27017,stuffdb-shard-00-02-qg7z1.mongodb.net:27017/test?ssl=true&replicaSet=StuffDB-shard-0&authSource=admin&retryWrites=true`;
 
 switch (process.env.NODE_ENV) {
   case 'dev':

@@ -1,19 +1,30 @@
 const express = require('express');
-const linkController = require('../controllers/linkController');
+const productController = require('../controllers/productController');
+const listController = require('../controllers/listController');
 const userController = require('../controllers/userController');
 const loginController = require('../controllers/loginController');
 const validationSchemas = require('./validationSchemas');
 
 const routes = express.Router();
 
-// Links
+// Items
+// -----------------------------------------
+// Create New Item
+routes.post('/products', validationSchemas.product, productController.new);
+// Update Item
+routes.patch('/products/:id', validationSchemas.productUpdate, productController.update);
+// Get one Item
+routes.get('/products/:id', validationSchemas.productId, productController.one);
+
+
+// Lists
 // -----------------------------------------
 // get all
-routes.get('/links', linkController.all);
-// Create New Link
-routes.post('/links', validationSchemas.link, linkController.new);
-// Get one link
-routes.get('/links/:id', validationSchemas.linkId, linkController.one);
+routes.get('/lists', listController.all);
+// Create New List
+routes.post('/lists', validationSchemas.list, listController.new);
+// Get one List
+routes.get('/lists/:id', validationSchemas.listId, listController.one);
 
 
 // User
@@ -21,9 +32,9 @@ routes.get('/links/:id', validationSchemas.linkId, linkController.one);
 // Create New User
 routes.post('/signup', validationSchemas.user, userController.new);
 // Get User Info
-routes.get('/user/:id', validationSchemas.userId, userController.one);
+routes.get('/users/:id', validationSchemas.userId, userController.one);
 // Get All Users
-// routes.get('/user', userController.all);
+routes.get('/users', userController.all);
 
 
 // Login
