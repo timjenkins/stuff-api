@@ -3,11 +3,12 @@ const validateInput = require('../helpers/validateInput');
 const { addListToUser } = require('./userController');
 const findUserAnd = require('../helpers/findUserAnd');
 
+
 // Link Controller functions
 const listController = {
   addProductToList: (listId, productId, next) => List.findByIdAndUpdate(
     listId,
-    { $push: { listItems: productId } },
+    { $push: { products: productId } },
     err => next(err),
   ),
 
@@ -23,15 +24,17 @@ const listController = {
 
   one: (req, res) => {
     validateInput(req, res, () => {
-      List.findById(req.params.id, (findErr, list) => {
-        if (findErr || !list) {
-          return res.status(404).send(findErr || 'Cannot find list');
-        }
-        if (req.user._id !== list.userId) {
-          return res.status(401).send('You do not have permissions to view this list');
-        }
-        return res.status(200).send(list);
-      });
+      List.findById(req.params.id)
+        .populate('products')
+        .exec((findErr, list) => {
+          if (findErr || !list) {
+            return res.status(404).send(findErr || 'Cannot find list');
+          }
+          if (req.user.id !== list.userId) {
+            return res.status(401).send('You do not have permissions to view this list');
+          }
+          return res.status(200).send(list);
+        });
     });
     return res;
   },

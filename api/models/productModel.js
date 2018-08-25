@@ -5,7 +5,7 @@ require('mongoose-uuid2')(mongoose);
 const { UUID } = mongoose.Types;
 
 const { Schema } = mongoose;
-const ListItemSchema = new Schema(
+const ProductSchema = new Schema(
   {
     name: {
       type: String,
@@ -20,10 +20,12 @@ const ListItemSchema = new Schema(
     currency: String,
     userId: {
       type: UUID,
+      ref: 'User',
       required: true,
     },
     listId: {
       type: UUID,
+      ref: 'List',
       required: true,
     },
     _id: {
@@ -34,10 +36,10 @@ const ListItemSchema = new Schema(
   { timestamps: true, id: false },
 );
 
-ListItemSchema.set('toObject', { getters: true });
-ListItemSchema.set('toJSON', { getters: true });
+ProductSchema.set('toObject', { getters: true });
+ProductSchema.set('toJSON', { getters: true });
 
 // Compile model from schema
-const ListItem = mongoose.model('ListItemSchema', ListItemSchema);
+const Product = mongoose.model('Product', ProductSchema);
 
-module.exports = ListItem;
+module.exports = Product;

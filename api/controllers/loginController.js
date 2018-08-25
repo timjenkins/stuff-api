@@ -10,7 +10,7 @@ const loginController = {
     const token = jwt.sign({
       id: user._id,
     }, jwtSecret, {
-      expiresIn: 300000,
+      expiresIn: 900,
     });
 
     return token;
@@ -42,7 +42,9 @@ const loginController = {
             }
 
             // Handle success
-            return res.status(200).send(loginController.generateToken(foundUser));
+            return res.status(200).send({
+              token: loginController.generateToken(foundUser),
+            });
           },
         );
       });

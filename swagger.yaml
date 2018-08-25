@@ -110,11 +110,11 @@ paths:
       summary: returns a specific list by id
       responses:
         '200':
-          description: a single list with it's items
+          description: a single list with it's products
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListWithItems'
+                $ref: '#/components/schemas/ListWithProducts'
         '401':
           description: auth error
         '404':
@@ -154,9 +154,9 @@ paths:
           description: auth error
         '404':
           description: the list does not exist
-  /items:
+  /product:
     post:
-      summary: 'create new list item, add to list array'
+      summary: 'create new product, add id to list array'
       requestBody:
         required: true
         content:
@@ -189,40 +189,40 @@ paths:
                 - listId
       responses:
         '201':
-          description: 'new listIitem created, returns new listIitem object'
+          description: 'new product created, returns new product object'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListItem'
+                $ref: '#/components/schemas/Product'
         '400':
           description: 'invalid input, object invalid'
         '401':
           description: invalid token
-  '/items/:id':
+  '/products/:id':
     parameters:
       - in: path
         name: _id
-        description: The listItem's ID
+        description: The product's ID
         required: true
         schema:
           type: string
           format: uuid
           example: d290f1ee-6c54-4b01-90e6-d701748f0851
     get:
-      summary: returns a specific listItem by id
+      summary: returns a specific product by id
       responses:
         '200':
-          description: a single listItem
+          description: a single product
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListItem'
+                $ref: '#/components/schemas/Product'
         '401':
           description: auth error
         '404':
-          description: the listItem does not exist
+          description: the product does not exist
     patch:
-      summary: updates a specific listItem
+      summary: updates a specific product
       requestBody:
         required: true
         content:
@@ -249,26 +249,26 @@ paths:
               currency: USD
       responses:
         '201':
-          description: 'updates specific listItem, returns updated listItem'
+          description: 'updates specific product, returns updated product'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListItem'
+                $ref: '#/components/schemas/Product'
         '400':
           description: 'invalid input, object invalid'
         '401':
           description: invalid token
         '404':
-          description: the listItem does not exist
+          description: the product does not exist
     delete:
-      summary: deletes a specific listItem
+      summary: deletes a specific product
       responses:
         '202':
-          description: listItem was deleted
+          description: product was deleted
         '401':
           description: auth error
         '404':
-          description: the listItem does not exist
+          description: the product does not exist
 components:
   securitySchemes:
     bearerAuth:
@@ -309,8 +309,8 @@ components:
           example: Wedding Gift Ideas
         description:
           type: string
-          example: A bunch of items to possibly buy for Jim and Pams wedding
-        listItems:
+          example: A bunch of products to possibly buy for Jim and Pams wedding
+        products:
           type: array
           items:
             type: string
@@ -332,7 +332,7 @@ components:
           type: string
           format: date-time
           example: '2016-08-29T09:12:33.001Z'
-    ListWithItems:
+    ListWithProducts:
       type: object
       properties:
         name:
@@ -341,10 +341,10 @@ components:
         description:
           type: string
           example: A bunch of items to possibly buy for Jim and Pams wedding
-        listItems:
+        products:
           type: array
           items:
-            $ref: '#/components/schemas/ListItem'
+            $ref: '#/components/schemas/Product'
         userId:
           type: string
           format: uuid
@@ -361,7 +361,7 @@ components:
           type: string
           format: date-time
           example: '2016-08-29T09:12:33.001Z'
-    ListItem:
+    Product:
       type: object
       properties:
         name:

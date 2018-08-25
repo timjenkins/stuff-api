@@ -14,12 +14,13 @@ const ListSchema = new Schema(
     description: {
       type: String,
     },
-    listItems: {
-      type: [{ type: UUID }],
+    products: {
+      type: [{ type: UUID, ref: 'Product' }],
       default: [],
     },
     userId: {
       type: UUID,
+      ref: 'User',
       required: true,
     },
     _id: {

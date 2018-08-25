@@ -1,6 +1,6 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const helmet = require('helmet');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const jwt = require('express-jwt');
