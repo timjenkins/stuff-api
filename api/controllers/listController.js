@@ -1,6 +1,6 @@
 const List = require('../models/listModel.js');
 const validateInput = require('../helpers/validateInput');
-const { addListToUser } = require('./userController');
+const { addListToUser, removeListFromUser } = require('./userController');
 const findUserAnd = require('../helpers/findUserAnd');
 
 
@@ -11,6 +11,14 @@ const listController = {
     { $push: { products: productId } },
     err => next(err),
   ),
+
+  removeProductFromList: (listId, productId, next) => {
+    List.findByIdAndUpdate(
+      listId,
+      { $pullAll: { products: [productId] } },
+      err => next(err),
+    );
+  },
 
   all: (req, res) => {
     List.find({ userId: req.user.id }, (err, lists) => {
@@ -64,6 +72,63 @@ const listController = {
             }
             // Yay we made it! returns newList object
             return res.status(201).send(newList);
+          });
+        });
+      });
+    });
+    return res;
+  },
+
+  update: (req, res) => {
+    validateInput(req, res, () => {
+      // Find the list to update
+      List.findById(req.params.id, (findErr, list) => {
+        if (findErr) {
+          return res.status(404).send(findErr);
+        }
+        if (req.user.id !== list.userId) {
+          return res.status(401).send('You do not have permissions to edit this list');
+        }
+        list.set({ ...req.body });
+        // Save list
+        return list.save((err, newItem) => {
+          // Handle error case
+          if (err) {
+            return res.status(500).send(err);
+          }
+          // if no errors on save, return success
+          return res.status(201).send(newItem);
+        });
+      });
+    });
+    return res;
+  },
+
+  delete: (req, res) => {
+    validateInput(req, res, () => {
+      // Find the product
+      List.findOne({ _id: req.params.id }, (findErr, list) => {
+        if (!list) {
+          return res.status(404).send('No list exists with that ID');
+        }
+        if (req.user.id !== list.userId) {
+          return res.status(401).send('You do not have permissions to delete this list');
+        }
+
+        // Delete refs in list
+        return list.remove((deleteError) => {
+          // Handle error case
+          if (deleteError) {
+            return res.status(500).send(deleteError);
+          }
+
+          return removeListFromUser(list.userId, list._id, (updateUserError) => {
+            if (updateUserError) {
+              // Sends error if addItemToList fails
+              return res.status(500).send(updateUserError);
+            }
+            // List was successfully deleted
+            return res.status(200).send({ message: 'List successfully deleted' });
           });
         });
       });

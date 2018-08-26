@@ -11,6 +11,14 @@ const userController = {
     err => next(err),
   ),
 
+  removeListFromUser: (userId, listId, next) => {
+    User.findByIdAndUpdate(
+      userId,
+      { $pullAll: { lists: [listId] } },
+      err => next(err),
+    );
+  },
+
 
   new: (req, res) => {
     validateInput(req, res, () => {

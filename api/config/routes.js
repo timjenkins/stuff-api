@@ -7,14 +7,16 @@ const validationSchemas = require('./validationSchemas');
 
 const routes = express.Router();
 
-// Items
+// Products
 // -----------------------------------------
-// Create New Item
+// Create New Product
 routes.post('/products', validationSchemas.product, productController.new);
-// Update Item
-routes.patch('/products/:id', validationSchemas.productUpdate, productController.update);
-// Get one Item
+// Get one Product
 routes.get('/products/:id', validationSchemas.productId, productController.one);
+// Update Product
+routes.patch('/products/:id', validationSchemas.productUpdate, productController.update);
+// Delete Product
+routes.delete('/products/:id', validationSchemas.productId, productController.delete);
 
 
 // Lists
@@ -25,6 +27,8 @@ routes.get('/lists', listController.all);
 routes.post('/lists', validationSchemas.list, listController.new);
 // Get one List
 routes.get('/lists/:id', validationSchemas.listId, listController.one);
+// Update one List
+routes.patch('/lists/:id', listController.update);
 
 
 // User

@@ -23,15 +23,15 @@ const validationSchemas = {
   ],
 
   productUpdate: [
-    check('id').isUUID(),
-    check('listId').isUUID(),
+    check('id').optional().isUUID(),
+    check('listId').optional().isUUID(),
     check('url').optional().isURL(),
     check('price').optional().isCurrency({ allow_negatives: false }),
     check('currency').optional().isAlpha(),
   ],
 
   productId: [
-    check('id').isAlphanumeric(),
+    check('id').exists(),
   ],
 
   userId: [
