@@ -12,7 +12,12 @@ require('newrelic');
 
 // Init app
 const app = express();
+
+// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 // Security package
 app.use(helmet());
@@ -46,5 +51,5 @@ mongoose.connection.once('open', () => {
 
 
 // Connect Router
-app.use('/', routes);
+app.use('/api', routes);
 module.exports = app.listen(8080, '0.0.0.0');

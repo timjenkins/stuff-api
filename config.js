@@ -23,7 +23,7 @@ module.exports = {
   globalSalt: process.env.GLOBAL_SALT,
   jwtSecret: process.env.JWT_SECRET,
   publicPaths: [
-    '/login',
-    '/signup',
+    '/api/login',
+    '/api/signup',
   ],
 };
