@@ -21,8 +21,8 @@ const loginController = {
       // Find user by email
       User.findOne({ email: req.body.email }, (err, foundUser) => {
         // Handle case where no user is found
-        if (err) {
-          return res.status(404).send('Invalid Credentials');
+        if (err || !foundUser) {
+          return res.status(404).send({error: 'Invalid Credentials'});
         }
         // Salt the password
         const enteredSaltedPassword = req.body.password + globalSalt;
@@ -38,7 +38,7 @@ const loginController = {
 
             // Handle wrong password
             } else if (compareRes !== true) {
-              return res.status(404).send('Invalid Credentials');
+              return res.status(404).send({error: 'Invalid Credentials'});
             }
 
             // Handle success

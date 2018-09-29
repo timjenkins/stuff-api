@@ -29,7 +29,7 @@ const userController = {
       bcrypt.hash(saltedPassword, 14, (encryptionError, hash) => {
         // Handle encryption error
         if (encryptionError) {
-          res.status(500).send('A server error has occured');
+          res.status(500).send({error: 'A server error has occured');
         }
 
         // Create new user
@@ -58,9 +58,9 @@ const userController = {
     validateInput(req, res, () => {
       User.findOne({ _id: req.params.id }, (err, user) => {
         if (err) {
-          res.status(500).send('An error occurred while retrieving your links');
+          res.status(500).send({error: 'An error occurred while retrieving your links');
         } else if (req.user.id !== user._id) {
-          res.status(403).send('You do not have proper permissions to view this user.');
+          res.status(403).send({error: 'You do not have proper permissions to view this user.');
         } else {
           const result = user;
           result.password = null;
@@ -74,7 +74,7 @@ const userController = {
   // DEBUG ONLY
   all: (req, res) => {
     User.find({}, (err, users) => {
-      if (err) return res.status(500).send('An error occurred while retrieving the users');
+      if (err) return res.status(500).send({error: 'An error occurred while retrieving the users');
 
       res.status(200).send(users);
       return res;

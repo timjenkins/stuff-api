@@ -13,7 +13,7 @@ const productController = {
           return res.status(404).send(findErr);
         }
         if (req.user._id !== product.userId) {
-          return res.status(401).send('You do not have permissions to view this product');
+          return res.status(401).send({error: 'You do not have permissions to view this product');
         }
         return res.status(200).send(product);
       });
@@ -61,7 +61,7 @@ const productController = {
           return res.status(404).send(findErr);
         }
         if (req.user.id !== product.userId) {
-          return res.status(401).send('You do not have permissions to edit this product');
+          return res.status(401).send({error: 'You do not have permissions to edit this product');
         }
         product.set({ ...req.body });
         // Save product
@@ -86,7 +86,7 @@ const productController = {
           return res.status(404).send(findErr);
         }
         if (req.user.id !== product.userId) {
-          return res.status(401).send('You do not have permissions to delete this product');
+          return res.status(401).send({error: 'You do not have permissions to delete this product');
         }
 
         // Delete refs in list

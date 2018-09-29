@@ -30,7 +30,7 @@ app.use(morgan('combined'));
 app.use(jwt({ secret: jwtSecret }).unless({ path: publicPaths }));
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   if (err.name === 'UnauthorizedError') {
-    res.status(401).send('invalid token');
+    res.status(401).send({error: 'invalid token'});
   }
 });
 
