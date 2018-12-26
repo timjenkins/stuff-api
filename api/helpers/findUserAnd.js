@@ -7,7 +7,7 @@ const User = require('../models/userModel');
 module.exports = (req, res, next) => {
   User.findOne({ _id: req.user.id }, (findUserError) => {
     if (findUserError) {
-      return res.status(500).send({error: 'Could not find user');
+      return res.status(500).send({error: 'Could not find user'});
     }
     return next();
   });

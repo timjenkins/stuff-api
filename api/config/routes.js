@@ -29,6 +29,8 @@ routes.post('/lists', validationSchemas.list, listController.new);
 routes.get('/lists/:id', validationSchemas.listId, listController.one);
 // Update one List
 routes.patch('/lists/:id', listController.update);
+// Delete one List
+routes.delete('/lists/:id', listController.delete);
 
 
 // User

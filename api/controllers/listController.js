@@ -23,7 +23,7 @@ const listController = {
   all: (req, res) => {
     List.find({ userId: req.user.id }, (err, lists) => {
       if (err) {
-        return res.status(500).send({error: 'An error occurred while retrieving your lists');
+        return res.status(500).send({error: 'An error occurred while retrieving your lists'});
       }
       res.status(200).send(lists);
       return res;
@@ -39,7 +39,7 @@ const listController = {
             return res.status(404).send(findErr || 'Cannot find list');
           }
           if (req.user.id !== list.userId) {
-            return res.status(401).send({error: 'You do not have permissions to view this list');
+            return res.status(401).send({error: 'You do not have permissions to view this list'});
           }
           return res.status(200).send(list);
         });
@@ -67,7 +67,7 @@ const listController = {
           return addListToUser(req.user.id, newList._id, (updateUserError) => {
             if (updateUserError) {
               // Sends error if addItemToList fails
-              return res.status(500).send({error: 'User error thing');
+              return res.status(500).send({error: 'User error thing'});
               // TODO: delete the newly created list
             }
             // Yay we made it! returns newList object
@@ -87,7 +87,7 @@ const listController = {
           return res.status(404).send(findErr);
         }
         if (req.user.id !== list.userId) {
-          return res.status(401).send({error: 'You do not have permissions to edit this list');
+          return res.status(401).send({error: 'You do not have permissions to edit this list'});
         }
         list.set({ ...req.body });
         // Save list
@@ -109,10 +109,10 @@ const listController = {
       // Find the product
       List.findOne({ _id: req.params.id }, (findErr, list) => {
         if (!list) {
-          return res.status(404).send({error: 'No list exists with that ID');
+          return res.status(404).send({error: 'No list exists with that ID'});
         }
         if (req.user.id !== list.userId) {
-          return res.status(401).send({error: 'You do not have permissions to delete this list');
+          return res.status(401).send({error: 'You do not have permissions to delete this list'});
         }
 
         // Delete refs in list
