@@ -11,6 +11,10 @@ const validationSchemas = {
     check('password').isAscii(),
   ],
 
+  productUrl: [
+    check('url').isString(),
+  ],
+
   list: [
     check('name').exists(),
   ],

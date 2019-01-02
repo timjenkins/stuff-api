@@ -3,6 +3,7 @@ const productController = require('../controllers/productController');
 const listController = require('../controllers/listController');
 const userController = require('../controllers/userController');
 const loginController = require('../controllers/loginController');
+const scraperController = require('../controllers/scraperController');
 const validationSchemas = require('./validationSchemas');
 
 const routes = express.Router();
@@ -48,5 +49,9 @@ routes.get('/users', userController.all);
 // check email + password
 routes.post('/login', validationSchemas.login, loginController.login);
 
+// Scraper
+// -----------------------------------------
+// takes product url and returns data
+routes.post('/product-url', validationSchemas.productUrl, scraperController.scraper);
 
 module.exports = routes;
